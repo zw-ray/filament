@@ -373,6 +373,17 @@ wgpu::TextureView WebGPUSwapChain::getCurrentTextureView( wgpu::Extent2D const& 
     return surfaceTexture.texture.CreateView(&textureViewDescriptor);
 }
 
+wgpu::Texture WebGPUSwapChain::getCurrentTexture(wgpu::Extent2D const& extent) {
+    if (isHeadless()) {
+        return mRenderTargetTextures[mHeadlessBufferIndex];
+    } else {
+        setExtent(extent);
+        wgpu::SurfaceTexture surfaceTexture;
+        mSurface.GetCurrentTexture(&surfaceTexture);
+        return surfaceTexture.texture;
+    }
+}
+
 wgpu::TextureView WebGPUSwapChain::getCurrentHeadlessTextureView() {
     return mRenderTargetViews[mHeadlessBufferIndex];
 }

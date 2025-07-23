@@ -324,6 +324,59 @@ namespace {
 
 } // namespace
 
+size_t WebGPUTexture::getWGPUTextureFormatPixelSize(wgpu::TextureFormat format) {
+    switch (format) {
+        case wgpu::TextureFormat::R8Unorm:
+        case wgpu::TextureFormat::R8Snorm:
+        case wgpu::TextureFormat::R8Uint:
+        case wgpu::TextureFormat::R8Sint: return 1;
+        case wgpu::TextureFormat::R16Uint:
+        case wgpu::TextureFormat::R16Sint:
+        case wgpu::TextureFormat::R16Float:
+        case wgpu::TextureFormat::RG8Unorm:
+        case wgpu::TextureFormat::RG8Snorm:
+        case wgpu::TextureFormat::RG8Uint:
+        case wgpu::TextureFormat::RG8Sint: return 2;
+        case wgpu::TextureFormat::R32Float:
+        case wgpu::TextureFormat::R32Uint:
+        case wgpu::TextureFormat::R32Sint:
+        case wgpu::TextureFormat::RG16Uint:
+        case wgpu::TextureFormat::RG16Sint:
+        case wgpu::TextureFormat::RG16Float:
+        case wgpu::TextureFormat::RGBA8Unorm:
+        case wgpu::TextureFormat::RGBA8UnormSrgb:
+        case wgpu::TextureFormat::RGBA8Snorm:
+        case wgpu::TextureFormat::RGBA8Uint:
+        case wgpu::TextureFormat::RGBA8Sint:
+        case wgpu::TextureFormat::BGRA8Unorm:
+        case wgpu::TextureFormat::BGRA8UnormSrgb:
+        case wgpu::TextureFormat::RGB10A2Unorm:
+        case wgpu::TextureFormat::RGB10A2Uint:
+        case wgpu::TextureFormat::RG11B10Ufloat:
+        case wgpu::TextureFormat::RGB9E5Ufloat: return 4;
+        case wgpu::TextureFormat::RG32Float:
+        case wgpu::TextureFormat::RG32Uint:
+        case wgpu::TextureFormat::RG32Sint:
+        case wgpu::TextureFormat::RGBA16Uint:
+        case wgpu::TextureFormat::RGBA16Sint:
+        case wgpu::TextureFormat::RGBA16Float: return 8;
+        case wgpu::TextureFormat::RGBA32Float:
+        case wgpu::TextureFormat::RGBA32Uint:
+        case wgpu::TextureFormat::RGBA32Sint: return 16;
+        case wgpu::TextureFormat::Stencil8: return 1;
+        case wgpu::TextureFormat::Depth16Unorm: return 2;
+        case wgpu::TextureFormat::Depth24Plus: return 4;
+        case wgpu::TextureFormat::Depth24PlusStencil8: return 4;
+        case wgpu::TextureFormat::Depth32Float: return 4;
+        case wgpu::TextureFormat::Depth32FloatStencil8:
+            // This format is not copyable from texture to buffer.
+            return 0;
+        default:
+            // This format is not copyable or is compressed.
+            return 0;
+    }
+}
+
 WebGPUTexture::WebGPUTexture(const SamplerType samplerType, const uint8_t levels,
         const TextureFormat format, const uint8_t samples, const uint32_t width,
         const uint32_t height, const uint32_t depth, const TextureUsage usage,
