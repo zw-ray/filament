@@ -77,8 +77,9 @@ WebGPUDriver::WebGPUDriver(WebGPUPlatform& platform,
       mPipelineCache{ mDevice },
       mRenderPassMipmapGenerator{ mDevice },
       mSpdComputePassMipmapGenerator{ mDevice },
+      mBlitter{ mDevice},
       mHandleAllocator{ "Handles", driverConfig.handleArenaSize,
-          driverConfig.disableHandleUseAfterFreeCheck, driverConfig.disableHeapHandleTags } {
+          driverConfig.disableHandleUseAfterFreeCheck, driverConfig.disableHeapHandleTags }{
     mDevice.GetLimits(&mDeviceLimits);
 }
 

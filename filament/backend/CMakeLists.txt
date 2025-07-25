@@ -258,6 +258,8 @@ if (FILAMENT_SUPPORTS_WEBGPU)
             include/backend/platforms/WebGPUPlatform.h
             src/webgpu/platform/WebGPUPlatform.cpp
             src/webgpu/SpdMipmapGenerator/SpdMipmapGenerator.cpp
+            src/webgpu/WebGPUBlitter.cpp
+            src/webgpu/WebGPUBlitter.h
             src/webgpu/WebGPUBufferBase.cpp
             src/webgpu/WebGPUBufferBase.h
             src/webgpu/WebGPUBufferObject.cpp
